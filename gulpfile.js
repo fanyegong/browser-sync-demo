@@ -3,6 +3,7 @@ var gulp = require('gulp');
 var sass = require('gulp-sass');
 var browserSync = require('browser-sync');
 var reload = browserSync.reload;
+var ssi = require('browsersync-ssi');
 
 gulp.task('sass', function() {
     return gulp.src('app/scss/main.scss')
@@ -21,7 +22,12 @@ gulp.task('sass', function() {
 gulp.task('serve', ['sass'], function() {
     browserSync({
         server: {
-            baseDir: 'app'
+            baseDir: 'app',
+            middleware: ssi({
+                baseDir: __dirname + '/app',
+                ext: '.html',
+                version: '1.4.0'
+            })
         }
     });
 
